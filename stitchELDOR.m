@@ -1,4 +1,4 @@
-function [ data, params ] = stitcheldor(varargin)
+function [ data, params ] = stitchELDOR(varargin)
 % stitch together two ELDOR time traces
 %
 % USAGE:
@@ -25,7 +25,7 @@ p.addRequired('y_short', @(x)validateattributes(x,{'numeric'},{'vector'}));
 p.addRequired('x_long', @(x)validateattributes(x,{'numeric'},{'vector'}));
 p.addRequired('y_long', @(x)validateattributes(x,{'numeric'},{'vector'}));
 p.addParamValue('autophase', true, @(x)validateattributes(x,{'logical'},{'scalar'}));
-p.FunctionName = 'stitcheldor';
+p.FunctionName = 'stitchELDOR';
 p.parse(varargin{:});
 
 % save x axes in output
@@ -45,16 +45,17 @@ data.stitched.x = [ data.short.x; data.long.x(params.split.index:end) ];
 data.interp.x   = (data.short.x(1):data.short.x(2)-data.short.x(1):data.long.x(end))';
 
 % phase-correct y data if needed and data complex
-if p.Results.autophase && ~isreal(p.Results.y_short) && ~isreal(p.Results.y_long)
+if ~isreal(p.Results.y_short) && p.Results.autophase
   [ data.short.y params.short.phase params.short.phasedeviation] = autophase(p.Results.y_short);
-  [ data.long.y  params.long.phase  params.long.phasedeviation]  = autophase(p.Results.y_long);
-  disp('complex')
 else
   data.short.y = p.Results.y_short;
-  data.long.y  = p.Results.y_long;
   params.short.phase = false;
+end
+if ~isreal(p.Results.y_long) && p.Results.autophase
+  [ data.long.y  params.long.phase  params.long.phasedeviation]  = autophase(p.Results.y_long);
+else
+  data.long.y  = p.Results.y_long;
   params.long.phase  = false;
-  disp('real')
 end
 
 % interpolate ylong to indices of xshort

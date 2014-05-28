@@ -14,7 +14,7 @@ file_long  = '<infile>';
 [datalong.x, datalong.y] = eprload(strcat(indir, file_long));
 
 % stitch it
-[data, params] = stitcheldor(datashort.x, datashort.y, datalong.x, datalong.y)
+[data, params] = stitchELDOR(datashort.x, datashort.y, datalong.x, datalong.y)
 
 % plot it
 figure(1)

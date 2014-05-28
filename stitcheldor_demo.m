@@ -23,7 +23,7 @@ figure(2)
 plot(data.short.x,imag(data.short.y),data.long.x,imag(data.long.y))
 
 figure(3)
-plot(data.stitched.x, data.stitched.y, data.interp.x, data.interp.y + 3e7)
+plot(data.stitched.x, data.stitched.y, data.interp.x, data.interp.y)
 
 % save it
 out = [ data.interp.x real(data.interp.y) imag(data.interp.y) ]';

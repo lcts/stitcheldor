@@ -1,9 +1,10 @@
 clear all
 
-% Files
+% Files and directories
+% enter directories with trailing slashes .../
 indir  = '<indir>';
 outdir = '<outdir>';
-oufile = '<outfile>';
+outfile = '<outfile>';
 
 file_short = '<infile>';
 file_long  = '<infile>';
@@ -27,6 +28,7 @@ plot(data.stitched.x, data.stitched.y, data.interp.x, data.interp.y)
 
 % save it
 out = [ data.interp.x real(data.interp.y) imag(data.interp.y) ]';
+% out = [ data.stitched.x real(data.stitched.y) imag(data.stitched.y) ]';
 
 outfile = strcat(outdir, outfile);
 

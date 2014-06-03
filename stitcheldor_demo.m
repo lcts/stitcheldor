@@ -27,7 +27,10 @@ figure(2)
 plot(data.short.x,imag(data.short.y),data.long.x,imag(data.long.y))
 
 figure(3)
-plot(data.stitched.x, data.stitched.y, data.interp.x, data.interp.y + 0.2 * max(data.interp.y))
+hold on
+plot(data.stitched.x, real(data.stitched.y), data.interp.x, real(data.interp.y + 0.2 * max(data.interp.y)));
+plot(data.stitched.x, imag(data.stitched.y), data.interp.x, imag(data.interp.y + 0.2 * max(data.interp.y)));
+hold off
 
 % save it
 out = [ data.interp.x real(data.interp.y) imag(data.interp.y) ]';

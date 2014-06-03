@@ -5,8 +5,8 @@ function [ data, phase, offset, deviation ] = autophase(varargin)
 % USAGE:
 % dataout = autophase(data)
 % [dataout, phase] = autophase(data)
-% [dataout, phase, deviation] = autophase(data)
-% [dataout, phase, deviation] = autophase(data, 'units', '<value>', 'rot180', <boolean>)
+% [dataout, phase, offset, deviation] = autophase(data)
+% [dataout, phase, offset, deviation] = autophase(data, 'units', '<value>', 'rot180', <boolean>)
 %
 % data:       complex data vector to be phase-corrected
 % units:      'rad' or 'deg', return phase in degrees or rad
@@ -14,8 +14,9 @@ function [ data, phase, offset, deviation ] = autophase(varargin)
 %             the phase so that real(data) has a positive integral. Set this to true if auto-
 %             adjustment fails
 %
-% data:    phase-corrected data
+% data:       phase-corrected data
 % phase:      the phase used for correction
+% offset:     the 0th order polynomial 
 % deviation:  the deviation of the imaginary part from 0th order polynomial, normalized
 %
 p = inputParser;
@@ -44,7 +45,6 @@ data   = p.Results.data * exp(i*phase);
 % rotation not necessary when neither (rotate 0°) or both (rotate 360°) rot180 and
 % trapz(real(data)) < 0 are true
 if xor(trapz(real(data)) < 0, p.Results.rot180)
-  disp('FLIPPED!')
   data  = data * exp(i*pi);
   phase = phase + pi;
 end

@@ -11,7 +11,7 @@ file_long  = 'SOMD 5CS 324 359 Apo EK 6us.DSC';
 
 % parameters
 autophase = true; % automatically phase-correct data, true or false
-offset = 1000;       % shift splitpoint towards 0ns
+offset = 0;       % shift splitpoint towards 0ns
 
 % load data
 [datashort.x, datashort.y] = eprload(strcat(indir, file_short));

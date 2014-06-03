@@ -6,7 +6,7 @@ function [ data, phase, offset, deviation ] = autophase(varargin)
 % dataout = autophase(data)
 % [dataout, phase] = autophase(data)
 % [dataout, phase, deviation] = autophase(data)
-% [dataout, phase, deviation] = autophase(data, 'units', '<value>', 'flip180', <boolean>)
+% [dataout, phase, deviation] = autophase(data, 'units', '<value>', 'rot180', <boolean>)
 %
 % data:       complex data vector to be phase-corrected
 % units:      'rad' or 'deg', return phase in degrees or rad
@@ -21,7 +21,7 @@ function [ data, phase, offset, deviation ] = autophase(varargin)
 p = inputParser;
 p.addRequired('data', @(x)validateattributes(x,{'numeric'},{'vector'}));
 p.addParamValue('units', 'rad', @(x)ischar(validatestring(x,{'rad', 'deg'})));
-p.addParamValue('flip180', false, @(x)validateattributes(x,{'logical'},{'scalar'}));
+p.addParamValue('rot180', false, @(x)validateattributes(x,{'logical'},{'scalar'}));
 p.FunctionName = 'autophase';
 p.parse(varargin{:});
 
@@ -43,7 +43,7 @@ data   = p.Results.data * exp(i*phase);
 % rotate 180° if necessary
 % rotation not necessary when neither (rotate 0°) or both (rotate 360°) rot180 and
 % trapz(real(data)) < 0 are true
-if xor(trapz(real(data)) < 0, rot180)
+if xor(trapz(real(data)) < 0, p.Results.rot180)
   data  = data * exp(i*pi);
   phase = phase + pi;
 end

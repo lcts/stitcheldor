@@ -37,7 +37,7 @@ data.short.x = p.Results.x_short;
 data.long.x  = p.Results.x_long;
 
 % find splitpoints for short.x and long.x
-[params.short.split.value,  params.short.split.index] = min(abs(data.short.x - offset));
+[params.short.split.value,  params.short.split.index] = min(abs(data.short.x - p.Results.offset));
 [~,  params.long.split.index] = min(abs(data.long.x - data.short.x(params.short.split.index)));
 % shift by one if the found index is on the wrong side due to min(abs(...))
 if data.long.x(params.long.split.index) <= params.short.split.value
@@ -76,6 +76,6 @@ params.offset = ab(2);
 
 % scale data.long.y and stitch it
 data.stitched.y = params.scaling * data.long.y + params.offset;
-data.stitched.y = [ data.short.y(1:arams.short.split.index); data.stitched.y(params.long.split.index:end) ];
+data.stitched.y = [ data.short.y(1:params.short.split.index); data.stitched.y(params.long.split.index:end) ];
 % as well as interpolate it at points interp.x
 data.interp.y = interp1(data.stitched.x, data.stitched.y, data.interp.x);

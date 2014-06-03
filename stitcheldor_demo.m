@@ -2,12 +2,12 @@ clear all
 
 % Files and directories
 % enter directories with trailing slashes .../
-indir  = '<indir>';
-outdir = '<outdir>';
-outfile = '<outfile>';
+indir  = '/home/cengelha/Daten/Aaron/2014-05-29/';
+outdir = '/home/cengelha/Daten/Aaron/2014-05-29/';
+outfile = 'SOMD 5CS 324 359 Apo EK 6us stitched.dat';
 
-file_short = '<infile>';
-file_long  = '<infile>';
+file_short = 'SOMD 5CS 324 359 Apo EK 2us.DSC';
+file_long  = 'SOMD 5CS 324 359 Apo EK 6us.DSC';
 
 
 % load data

@@ -38,7 +38,7 @@ offset = phase(2);
 phase = phase(1);
 
 % correct phases
-if ~flip180
+if ~p.Results.flip180
   data = p.Results.data*exp(i*phase);
 else
   data = p.Results.data*exp(i * (phase + pi));

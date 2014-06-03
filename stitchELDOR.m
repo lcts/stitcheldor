@@ -37,8 +37,9 @@ data.short.x = p.Results.x_short;
 data.long.x  = p.Results.x_long;
 
 % find splitpoints for short.x and long.x
-[params.short.split.value,  params.short.split.index] = min(abs(data.short.x - p.Results.offset));
-[~,  params.long.split.index] = min(abs(data.long.x - data.short.x(params.short.split.index)));
+[~, params.short.split.index] = min(abs(data.short.x - (data.short.x(end) - p.Results.offset)));
+[~, params.long.split.index] = min(abs(data.long.x - data.short.x(params.short.split.index)));
+params.short.split.value = data.short.x(params.short.split.index);
 % shift by one if the found index is on the wrong side due to min(abs(...))
 if data.long.x(params.long.split.index) <= params.short.split.value
   params.long.split.index = params.long.split.index + 1;

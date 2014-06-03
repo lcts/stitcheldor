@@ -14,7 +14,7 @@ function [ data, phase, offset, deviation ] = autophase(varargin)
 %             the phase so that real(data) has a positive integral. Set this to true if auto-
 %             adjustment fails
 %
-% dataout:    phase-corrected data
+% data:    phase-corrected data
 % phase:      the phase used for correction
 % deviation:  the deviation of the imaginary part from 0th order polynomial, normalized
 %
@@ -44,6 +44,7 @@ data   = p.Results.data * exp(i*phase);
 % rotation not necessary when neither (rotate 0°) or both (rotate 360°) rot180 and
 % trapz(real(data)) < 0 are true
 if xor(trapz(real(data)) < 0, p.Results.rot180)
+  disp('FLIPPED!')
   data  = data * exp(i*pi);
   phase = phase + pi;
 end

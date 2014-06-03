@@ -28,6 +28,9 @@ p.addParamValue('autophase', true, @(x)validateattributes(x,{'logical'},{'scalar
 p.FunctionName = 'stitchELDOR';
 p.parse(varargin{:});
 
+VERSION = '0.7.2';
+fprintf('\nstitchELDOR v%s\n', VERSION);
+
 % save x axes in output
 data.short.x = p.Results.x_short;
 data.long.x  = p.Results.x_long;

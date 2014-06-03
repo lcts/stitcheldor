@@ -24,6 +24,9 @@ p.addParamValue('flip180', false, @(x)validateattributes(x,{'logical'},{'scalar'
 p.FunctionName = 'autophase';
 p.parse(varargin{:});
 
+VERSION = '0.7.2';
+fprintf('\nautophase v%s\n', VERSION);
+
 % function for phase correction: Minimize signal intensity in imag. channel:
 % Multiply data with phase angle:                     data*exp(i*x(1))
 % take the imaginary part and 0-order bg correct it:  imag(...) - x(2)

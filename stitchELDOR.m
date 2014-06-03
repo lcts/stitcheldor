@@ -32,7 +32,7 @@ p.addParamValue('offset', 0, @(x)validateattributes(x,{'numeric'},{'scalar'}));
 p.FunctionName = 'stitchELDOR';
 p.parse(varargin{:});
 
-VERSION = '0.8';
+VERSION = '0.8-next';
 fprintf('\nstitchELDOR v%s\n', VERSION);
 
 % save x axes in output

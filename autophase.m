@@ -26,7 +26,7 @@ p.addParamValue('rot180', false, @(x)validateattributes(x,{'logical'},{'scalar'}
 p.FunctionName = 'autophase';
 p.parse(varargin{:});
 
-VERSION = '0.8';
+VERSION = '0.8-next';
 fprintf('\nautophase v%s\n', VERSION);
 
 % function for phase correction: Minimize signal intensity in imag. channel:

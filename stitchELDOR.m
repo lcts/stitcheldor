@@ -11,6 +11,9 @@ function [ data, params ] = stitchELDOR(varargin)
 % INPUTS:
 % x/y_short/long: data to be stitched
 % autophase:      true or false, perform phase-correction
+% offset:         in ns, shift splitpoint manually, default 0
+%                 'offset' is defined negative, i.e a positive value shifts the
+%                 splitpoint towards 0ns
 %
 % OUTPUTS:
 % data:   A struct containing the original data (phase-corrected) in data.short
@@ -24,7 +27,8 @@ p.addRequired('x_short', @(x)validateattributes(x,{'numeric'},{'vector'}));
 p.addRequired('y_short', @(x)validateattributes(x,{'numeric'},{'vector'}));
 p.addRequired('x_long',  @(x)validateattributes(x,{'numeric'},{'vector'}));
 p.addRequired('y_long',  @(x)validateattributes(x,{'numeric'},{'vector'}));
-p.addParamValue('autophase', true, @(x)validateattributes(x,{'logical'},{'scalar'}));
+p.addParamValue('autophase', true, @(x)validateattributes(x,{'logical'},{'scalar', 'nonnegative'}));
+p.addParamValue('offset', 0, @(x)validateattributes(x,{'numeric'},{'scalar'}));
 p.FunctionName = 'stitchELDOR';
 p.parse(varargin{:});
 
@@ -32,16 +36,17 @@ p.parse(varargin{:});
 data.short.x = p.Results.x_short;
 data.long.x  = p.Results.x_long;
 
-% find splitpoint as minimum of xlong - max(xshort)
-[~,  params.split.index] = min(abs(data.long.x - max(data.short.x)));
+% find splitpoints for short.x and long.x
+[params.short.split.value,  params.short.split.index] = min(abs(data.short.x - offset));
+[~,  params.long.split.index] = min(abs(data.long.x - data.short.x(params.short.split.index)));
 % shift by one if the found index is on the wrong side due to min(abs(...))
-if data.long.x(params.split.index) <= data.short.x(end)
-  params.split.index = params.split.index + 1;
+if data.long.x(params.long.split.index) <= params.short.split.value
+  params.long.split.index = params.long.split.index + 1;
 end
-params.split.value = data.long.x(params.split.index)
+params.long.split.value = data.long.x(params.long.split.index);
 
 % generate stitched and interpolated x axes
-data.stitched.x = [ data.short.x; data.long.x(params.split.index:end) ];
+data.stitched.x = [ data.short.x(1:params.short.split.index); data.long.x(params.long.split.index:end) ];
 data.interp.x   = (data.short.x(1):data.short.x(2)-data.short.x(1):data.long.x(end))';
 
 % phase-correct y data if needed and data complex
@@ -71,6 +76,6 @@ params.offset = ab(2);
 
 % scale data.long.y and stitch it
 data.stitched.y = params.scaling * data.long.y + params.offset;
-data.stitched.y = [ data.short.y; data.stitched.y(params.split.index:end) ];
+data.stitched.y = [ data.short.y(1:arams.short.split.index); data.stitched.y(params.long.split.index:end) ];
 % as well as interpolate it at points interp.x
 data.interp.y = interp1(data.stitched.x, data.stitched.y, data.interp.x);

@@ -2,12 +2,12 @@ clear all
 
 % Files and directories
 % enter directories with trailing slashes .../
-indir  = '/home/cengelha/Daten/Aaron/2014-05-29/';
-outdir = '/home/cengelha/Daten/Aaron/2014-05-29/';
-outfile = 'SOMD 5CS 324 359 Apo EK 6us stitched.dat';
+indir  = '/home/cengelha/Daten/ChR2/nanodiscs/ENBO/';
+outdir = '/home/cengelha/Daten/ChR2/nanodiscs/ENBO/ascrobate-reduced-out/';
+outfile = 'dark-reduced_stitched.dat';
 
-file_short = 'SOMD 5CS 324 359 Apo EK 2us.DSC';
-file_long  = 'SOMD 5CS 324 359 Apo EK 6us.DSC';
+file_short = '2015-07-29/2015-07-29_ChR2_C79C208_ascorbat_dark_QELDOR_ENBO_50K.DSC';
+file_long  = '2015-10-28/2015-10-28_ChR2_C79C208_nano_ascred_dark_QELDOR_ENBO_4us_50K.DSC';
 
 % parameters
 autophase = true; % automatically phase-correct data, true or false
@@ -15,6 +15,11 @@ offset = 0;       % shift splitpoint towards 0ns
 
 % load data
 [datashort.x, datashort.y] = eprload(strcat(indir, file_short));
+%datashort.x = datashort.x(1:158);
+%datashort.y = datashort.y(1:158);
+%tempdata = load(file_short,'ASCII');
+%datashort.x = tempdata(:,1);
+%datashort.y = tempdata(:,2) + i*tempdata(:,3);
 [datalong.x, datalong.y] = eprload(strcat(indir, file_long));
 
 % stitch it

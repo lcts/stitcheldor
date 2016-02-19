@@ -56,12 +56,14 @@ data.interp.x   = (data.short.x(1):data.short.x(2)-data.short.x(1):data.long.x(e
 % phase-correct y data if needed and data complex
 if ~isreal(p.Results.y_short) && p.Results.autophase
   [ data.short.y params.short.phase params.short.phaseoffset params.short.phasedeviation] = autophase(p.Results.y_short);
+  data.short.y = data.short.y - params.short.phaseoffset*i;
 else
   data.short.y = p.Results.y_short;
   params.short.phase = false;
 end
 if ~isreal(p.Results.y_long) && p.Results.autophase
   [ data.long.y params.long.phase params.long.phaseoffset params.long.phasedeviation]  = autophase(p.Results.y_long);
+  data.long.y = data.long.y - params.long.phaseoffset*i;
 else
   data.long.y  = p.Results.y_long;
   params.long.phase  = false;
